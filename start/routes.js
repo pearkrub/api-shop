@@ -21,3 +21,7 @@ Route.get('/profile', 'UserController.profile').middleware('auth')
 Route.post('/login', 'UserController.login')
   .as('users.login')
   .middleware('guest')
+
+Route.post('/logout', 'UserController.logout')
+  .as('users.logout')
+  .middleware('auth')
