@@ -10,7 +10,7 @@ class ProductController {
         const user = await auth.getUser()
         const products = await Product.query().where('user_id', user.id).with('user').fetch()
 
-        response.send(products)
+        return response.customResponse(200, products)
     }
 
     async show({ auth, response, params }) {
@@ -21,7 +21,7 @@ class ProductController {
         if (!product) {
             throw new CustomException("Product not fount.", 404, 404)
         }
-        response.send(product)
+        return response.customResponse(200, product)
     }
 
     async store({ auth, request, response }) {
@@ -59,7 +59,7 @@ class ProductController {
 
         const product = await Product.create(object)
 
-        response.send(product)
+        return response.customResponse(201, product)
     }
 }
 
