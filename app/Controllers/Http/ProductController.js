@@ -3,16 +3,28 @@
 const Product = use('App/Models/Product')
 const { validate } = use('Validator')
 const Helpers = use('Helpers')
+const CustomException = use('App/Exceptions/CustomException')
 
 class ProductController {
-    async index({ auth }) {
+    async index({ auth, response }) {
         const user = await auth.getUser()
         const products = await Product.query().where('user_id', user.id).with('user').fetch()
 
-        return products
+        response.send(products)
     }
 
-    async store({ auth, request }) {
+    async show({ auth, response, params }) {
+        const user = await auth.getUser()
+        const product = await Product.query()
+            .where('user_id', user.id)
+            .where('id', params.id).first()
+        if (!product) {
+            throw new CustomException("Product not fount.", 404, 404)
+        }
+        response.send(product)
+    }
+
+    async store({ auth, request, response }) {
         const rules = {
             name: 'required',
             price: 'required'
@@ -47,7 +59,7 @@ class ProductController {
 
         const product = await Product.create(object)
 
-        return product.toJSON()
+        response.send(product)
     }
 }
 

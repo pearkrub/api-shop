@@ -25,7 +25,9 @@ Route.group(() => {
   Route.post('/logout', 'UserController.logout')
 }).middleware('auth').prefix('users')
 
-Route.group(() => {
-  Route.get('/', 'ProductController.index')
-  Route.post('/', 'ProductController.store')
-}).middleware('auth').prefix('products')
+Route.resource('products', 'ProductController').middleware('auth')
+// Route.group(() => {
+//   Route.get('/', 'ProductController.index').as('products.index')
+//   Route.post('/', 'ProductController.store').as('products.store')
+//   Route.get('/:id', 'ProductController.show').as('products.show')
+// }).middleware('auth').prefix('products')
