@@ -8,7 +8,7 @@ class AppProvider extends ServiceProvider {
             const reponse = {
                 status: {
                     code: status,
-                    status: 'success'
+                    status: 'ok'
                 },
                 data: data
             }
