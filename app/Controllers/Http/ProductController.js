@@ -76,13 +76,39 @@ class ProductController {
     }
 
     async update({ params, request, response, auth }) {
+
         const product = await Product.find(params.id)
-        let object = {
-            name: request.input('name'),
-            price: request.input('price'),
-            user_id: user.id,
-            image: fileName
+        const user = await auth.getUser()
+        product.user_id = user.id
+        if (request.input('name')) {
+            product.name = request.input('name')
         }
+        if (request.input('price')) {
+            product.name = request.input('price')
+        }
+        if (request.file('image')) {
+            const image = request.file('image', {
+                types: ['image'],
+                size: '2mb'
+            })
+
+            if (image) {
+                const fileName = `${new Date().getTime()}.${image.subtype}`
+                await image.move(Helpers.tmpPath('uploads'), {
+                    name: fileName,
+                    overwrite: true
+                })
+
+                if (!image.moved()) {
+                    return image.error()
+                }
+                product.image = fileName
+            }
+
+        }
+        await product.save()
+
+        return response.customResponse(202, product)
 
     }
 }
