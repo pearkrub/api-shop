@@ -18,6 +18,9 @@ adonis new api-shop --api-only
 
 or manually clone the repo and then run `npm install`.
 
+```bash
+adonis key:generate
+```
 
 ### Migrations
 
