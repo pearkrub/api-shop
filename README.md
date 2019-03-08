@@ -18,6 +18,8 @@ adonis new api-shop --api-only
 
 or manually clone the repo and then run `npm install`.
 
+Use the adonis command to generate app_key
+
 ```bash
 adonis key:generate
 ```
