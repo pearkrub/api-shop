@@ -84,7 +84,7 @@ class ProductController {
             product.name = request.input('name')
         }
         if (request.input('price')) {
-            product.name = request.input('price')
+            product.price = request.input('price')
         }
         if (request.file('image')) {
             const image = request.file('image', {
