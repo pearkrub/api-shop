@@ -35,3 +35,9 @@ adonis migration:run
 ```js
 adonis seed
 ```
+
+### Run project on dev
+
+```bash
+adonis serve --dev
+```
